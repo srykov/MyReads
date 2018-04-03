@@ -15,7 +15,7 @@ const allBooks = [
     {
       id:'2',
       title: 'Ender\'s Game',
-      authors: 'Orson Scott',
+      authors: 'Orson Scott Card',
       shelfName: 'Currently Reading',
       cover: 'http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api'
     },
@@ -58,15 +58,37 @@ const allBooks = [
 
 class BooksApp extends React.Component {
 
+    state = {
+      showSearchPage: false
+    }
+
   render() {
     return (
       <div className="app">
-          <div className="list-books">
-            <div className="list-books-title">
-              <h1>My Reads</h1>
+        {this.state.showSearchPage ? (
+          <div className="search-books">
+            <div className="search-books-bar">
+              <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
+              <div className="search-books-input-wrapper">
+                {/*
+                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
+                  You can find these search terms here:
+                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
+
+                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
+                  you don't find a specific author or title. Every search is limited by search terms.
+                */}
+                <input type="text" placeholder="Search by title or author"/>
+
+              </div>
             </div>
-            <ListBooks books={allBooks}/>
+            <div className="search-books-results">
+              <ol className="books-grid"></ol>
+            </div>
           </div>
+        ) : (
+          <ListBooks books={allBooks} title="My Reads"/>
+        )}
       </div>
     )
   }
