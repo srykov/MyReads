@@ -13,9 +13,11 @@ class SearchBooks extends Component {
 	handleUpdateQuery = (event) => {
 		this.setState({query: event.target.value.trim()})
 		if(this.state.query.length > 0){
-			BooksAPI.search(this.state.query).then((books) => {
-				console.log(books)
-			  this.setState({matchingBooks: books})
+			BooksAPI.search(this.state.query)
+			.then((books) => {
+			  	this.setState({matchingBooks: books})
+			}).catch((error) => {
+				this.setState({matchingBooks: []})
 			})
 		}
 	}
@@ -25,7 +27,6 @@ class SearchBooks extends Component {
 	}
 
 	render(){
-		console.log('Matching Books: ', this.state.matchingBooks);
 		return (
 			<div className="search-books">
 				<div className="search-books-bar">
