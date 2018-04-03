@@ -1,23 +1,35 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import * as BooksAPI from './BooksAPI'
 import BookShelf from './BookShelf'
+
 
 class ListBooks extends Component {
 
+	state = {
+		books: [],
+	}
+
+	componentDidMount() {
+		BooksAPI.getAll().then((books) => {
+		  this.setState({books});
+		})
+
+	}
+
+	getBooksByShelf(shelfKey){
+		const booksForShelf = this.state.books.filter((book) => (
+			book.shelf ===  shelfKey
+		))
+		return booksForShelf
+	}
+
 	render(){
-		console.log('Props', this.props.books)
+		console.log('Props', this.state.books)
 
-		const currentlyReading = this.props.books.filter((book) => (
-			book.shelf ===  'currentlyReading'
-		))
-
-		const wantToRead = this.props.books.filter((book) => (
-			book.shelf ===  'wantToRead'
-		))
-
-		const read = this.props.books.filter((book) => (
-			book.shelf ===  'read'
-		))
+		const currentlyReading = this.getBooksByShelf('currentlyReading');
+		const wantToRead = this.getBooksByShelf('wantToRead');
+		const read = this.getBooksByShelf('read');
 
 		return(
 
