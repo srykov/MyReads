@@ -6,7 +6,7 @@ class Book extends Component {
 		console.log(this.props.book);
 		return(
 
-		    <li key={this.props.book.id}>
+		    <li >
 				<div className="book">
 		          <div className="book-top">
 		            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${this.props.book.cover})` }}></div>
