@@ -1,7 +1,5 @@
 import React, {Component} from 'react'
 
-
-
 class BookShelf extends Component {
 
 	render(){
@@ -14,7 +12,6 @@ class BookShelf extends Component {
 					{this.props.books.map((book) => (
 
 	                  <li key={book.id}>
-
 						<div className="book">
 	                      <div className="book-top">
 	                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.cover})` }}></div>
