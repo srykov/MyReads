@@ -8,15 +8,15 @@ class ListBooks extends Component {
 		console.log('Props', this.props.books)
 
 		const currentlyReading = this.props.books.filter((book) => (
-			book.shelfName ===  'Currently Reading'
+			book.shelf ===  'currentlyReading'
 		))
 
 		const wantToRead = this.props.books.filter((book) => (
-			book.shelfName ===  'Want to Read'
+			book.shelf ===  'wantToRead'
 		))
 
 		const read = this.props.books.filter((book) => (
-			book.shelfName ===  'Read'
+			book.shelf ===  'read'
 		))
 
 		return(
