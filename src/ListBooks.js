@@ -4,6 +4,26 @@ import * as BooksAPI from './BooksAPI'
 import BookShelf from './BookShelf'
 
 
+export class Shelf {
+	constructor(key, displayName){
+		this.shelfKey = key;
+		this.displayName = displayName;
+		this.books = [];
+	}
+
+	getBooksForShelf(allBooks){
+		const booksForShelf = allBooks.filter((book) => (
+			book.shelf ===  this.shelfKey
+		))
+		return booksForShelf
+	}
+}
+
+export const currentlyReading = new Shelf ('currentlyReading', 'Currently Reading');
+export const wantToRead = new Shelf('wantToRead', 'Want to Read');
+export const read = new Shelf('read', 'Read');
+
+
 class ListBooks extends Component {
 
 	state = {
@@ -17,22 +37,16 @@ class ListBooks extends Component {
 
 	}
 
-	getBooksByShelf(shelfKey){
-		const booksForShelf = this.state.books.filter((book) => (
-			book.shelf ===  shelfKey
-		))
-		return booksForShelf
+	moveBookToShelf(event, book){
+		console.log(book);
+		BooksAPI.update(book, event.target.value).then((json) => {
+		  console.log(json);
+		})
 	}
 
 	render(){
-		console.log('Props', this.state.books)
-
-		const currentlyReading = this.getBooksByShelf('currentlyReading');
-		const wantToRead = this.getBooksByShelf('wantToRead');
-		const read = this.getBooksByShelf('read');
 
 		return(
-
       		<div className="list-books">
 	            <div className="list-books-title">
 	              <h1>{this.props.title}</h1>
@@ -40,9 +54,9 @@ class ListBooks extends Component {
 
 	            <div className="list-books-content">
 					<div>
-						<BookShelf books={currentlyReading} shelfName="Currently Reading" />
-						<BookShelf books={wantToRead} shelfName="Want to Read" />
-						<BookShelf books={read} shelfName="Read" />
+						<BookShelf books={currentlyReading.getBooksForShelf(this.state.books)} shelfName={currentlyReading.displayName} onMoveBook={this.updateShelfForBook}/>
+						<BookShelf books={wantToRead.getBooksForShelf(this.state.books)} shelfName={wantToRead.displayName} />
+						<BookShelf books={read.getBooksForShelf(this.state.books)} shelfName={read.displayName} />
 					</div>
 				</div>
 	            <div className="open-search">
