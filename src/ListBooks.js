@@ -4,7 +4,7 @@ import * as BooksAPI from './BooksAPI'
 import BookShelf from './BookShelf'
 
 
-export class Shelf {
+class Shelf {
 	constructor(key, displayName){
 		this.shelfKey = key;
 		this.displayName = displayName;
@@ -19,9 +19,9 @@ export class Shelf {
 	}
 }
 
-export const currentlyReading = new Shelf ('currentlyReading', 'Currently Reading');
-export const wantToRead = new Shelf('wantToRead', 'Want to Read');
-export const read = new Shelf('read', 'Read');
+const currentlyReading = new Shelf ('currentlyReading', 'Currently Reading');
+const wantToRead = new Shelf('wantToRead', 'Want to Read');
+const read = new Shelf('read', 'Read');
 
 
 class ListBooks extends Component {
