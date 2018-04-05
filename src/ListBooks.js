@@ -1,47 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import * as BooksAPI from './BooksAPI'
 import BookShelf from './BookShelf'
 
-const currentlyReadingKey = 'currentlyReading';
-const wantToReadKey = 'wantToRead';
-const readKey = 'read';
-
 class ListBooks extends Component {
-
-	state = {
-		currentlyReading: [],
-		wantToRead: [],
-		read: []
-	}
-
-	componentDidMount() {
-		BooksAPI.getAll().then((books) => {
-			console.log('All Books: ', books)
-		  	this.setState({
-				currentlyReading: books.filter((book) => book.shelf === currentlyReadingKey),
-				wantToRead: books.filter((book) => book.shelf === wantToReadKey),
-				read:  books.filter((book) => book.shelf === readKey)
-		  	})
-		})
-	}
-
-	moveBookToShelf(book, destinationShelf){
-
-		if(destinationShelf === 'none'){
-			destinationShelf = ' ';
-		}
-		BooksAPI.update(book, destinationShelf)
-		.then(data => {
-			BooksAPI.getAll().then(books =>{
-			this.setState(state => ({
-				currentlyReading: books.filter((book) => book.shelf === currentlyReadingKey),
-				wantToRead: books.filter((book) => book.shelf === wantToReadKey),
-				read:  books.filter((book) => book.shelf === readKey)
-			}))
-		})}).catch((error) => console.log(error) )
-	}
-
 
 	render(){
 
@@ -53,9 +14,23 @@ class ListBooks extends Component {
 
 	            <div className="list-books-content">
 					<div>
-						<BookShelf books={this.state.currentlyReading} shelfName="Currently Reading" onMoveBook={(book, shelf) => this.moveBookToShelf(book, shelf)} />
-						<BookShelf books={this.state.wantToRead} shelfName="Want to Read" onMoveBook={(book, shelf) => this.moveBookToShelf(book, shelf)}/>
-						<BookShelf books={this.state.read} shelfName="Read" onMoveBook={(book, shelf) => this.moveBookToShelf(book, shelf)}/>
+						<BookShelf
+							books={this.props.books.currentlyReading}
+							shelfDisplayName={this.props.shelfNames.currentlyReading}
+							shelfKey={this.props.shelfKeys.currentlyReading}
+							onMoveBook={(book, shelf) => this.props.onMoveBook(book, shelf)}
+						/>
+						<BookShelf
+							books={this.props.books.wantToRead}
+							shelfDisplayName={this.props.shelfNames.wantToRead}
+							shelfKey={this.props.shelfKeys.wantToRead}
+							onMoveBook={(book, shelf) => this.props.onMoveBook(book, shelf)}
+						/>
+						<BookShelf
+							books={this.props.books.read}
+							shelfDisplayName={this.props.shelfNames.read}
+							shelfKey={this.props.shelfKeys.read}
+							onMoveBook={(book, shelf) => this.props.onMoveBook(book, shelf)}/>
 					</div>
 				</div>
 	            <div className="open-search">

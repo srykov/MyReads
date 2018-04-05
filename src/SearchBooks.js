@@ -26,6 +26,19 @@ class SearchBooks extends Component {
 		this.setState({query: '', filteredBooks: []})
 	}
 
+	getCurrentShelf = (book) => {
+		const libraryBooks = this.props.booksInLibrary;
+		let currentShelf = null;
+		if(libraryBooks.currentlyReading.find( (b) => b.id === book.id)) {
+			currentShelf = this.props.shelfKeys.currentlyReading
+		} else if (libraryBooks.currentlyReading.find( (b) => b.id === book.id)){
+			currentShelf = this.props.shelfKeys.wantToRead
+		} else if (libraryBooks.currentlyReading.find( (b) => b.id === book.id)){
+			currentShelf = this.props.shelfKeys.read
+		}
+		return currentShelf
+	}
+
 	render(){
 		return (
 			<div className="search-books">
@@ -38,7 +51,12 @@ class SearchBooks extends Component {
 				<div className="search-books-results">
 				  <ol className="books-grid">
 					{this.state.filteredBooks.map((book) => (
-	                  <Book book={book} key={book.id}/>
+	                  	<Book
+	                  		book={book}
+	                  		currentShelf={this.getCurrentShelf(book)}
+	                  		key={book.id}
+	                  		onMoveBook={(book, shelf) => this.props.onMoveBook(book, shelf)}
+                  		/>
 					))}
 				  </ol>
 				</div>

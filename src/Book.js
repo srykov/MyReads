@@ -9,19 +9,20 @@ class Book extends Component {
 
 	render(){
 
-		const {book} = this.props
+		const {book, currentShelf} = this.props
 		return(
 		    <li>
 				<div className="book">
 		          <div className="book-top">
 		            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${this.props.book.imageLinks.thumbnail})` }}></div>
 		            <div className="book-shelf-changer">
-		              <select value={book.shelf? book.shelf : 'none'} onChange={ (event) => this.handleMoveBook(book, event)}>
+
+		              <select value={currentShelf? currentShelf : 'none'} onChange={ (event) => this.handleMoveBook(book, event)}>
 		                <option value="none" disabled>Move to...</option>
 		                <option value="currentlyReading">Currently Reading</option>
 		                <option value="wantToRead">Want to Read</option>
 		                <option value="read">Read</option>
-		                {book.shelf && (
+		                {currentShelf && (
 		                	<option value="none">None</option>
 		                )}
 		              </select>
