@@ -11,7 +11,7 @@ class SearchBooks extends Component {
 	}
 
 	handleUpdateQuery = (event) => {
-		this.setState({query: event.target.value.trim()})
+		this.setState({query: event.target.value})
 		if(this.state.query.length > 0){
 			BooksAPI.search(this.state.query)
 			.then((books) => {
