@@ -3,46 +3,42 @@ import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import BookShelf from './BookShelf'
 
-
-class Shelf {
-	constructor(key, displayName){
-		this.shelfKey = key;
-		this.displayName = displayName;
-		this.books = [];
-	}
-
-	getBooksForShelf(allBooks){
-		const booksForShelf = allBooks.filter((book) => (
-			book.shelf ===  this.shelfKey
-		))
-		return booksForShelf
-	}
-}
-
-const currentlyReading = new Shelf ('currentlyReading', 'Currently Reading');
-const wantToRead = new Shelf('wantToRead', 'Want to Read');
-const read = new Shelf('read', 'Read');
-
+const currentlyReadingKey = 'currentlyReading';
+const wantToReadKey = 'wantToRead';
+const readKey = 'read';
 
 class ListBooks extends Component {
 
 	state = {
-		books: [],
+		currentlyReading: [],
+		wantToRead: [],
+		read: []
 	}
 
 	componentDidMount() {
 		BooksAPI.getAll().then((books) => {
-		  this.setState({books});
-		})
 
-	}
-
-	moveBookToShelf(event, book){
-		console.log(book);
-		BooksAPI.update(book, event.target.value).then((json) => {
-		  console.log(json);
+		  	this.setState({
+				currentlyReading: books.filter((book) => book.shelf === currentlyReadingKey),
+				wantToRead: books.filter((book) => book.shelf === wantToReadKey),
+				read:  books.filter((book) => book.shelf === readKey)
+		  	})
 		})
 	}
+
+	moveBookToShelf(book, shelf){
+
+		BooksAPI.update(book, shelf)
+		.then(data => {
+			BooksAPI.getAll().then(books =>{
+			this.setState(state => ({
+				currentlyReading: books.filter((book) => book.shelf === currentlyReadingKey),
+				wantToRead: books.filter((book) => book.shelf === wantToReadKey),
+				read:  books.filter((book) => book.shelf === readKey)
+			}))
+		})}).catch((error) => console.log(error) )
+	}
+
 
 	render(){
 
@@ -54,9 +50,9 @@ class ListBooks extends Component {
 
 	            <div className="list-books-content">
 					<div>
-						<BookShelf books={currentlyReading.getBooksForShelf(this.state.books)} shelfName={currentlyReading.displayName} onMoveBook={this.updateShelfForBook}/>
-						<BookShelf books={wantToRead.getBooksForShelf(this.state.books)} shelfName={wantToRead.displayName} />
-						<BookShelf books={read.getBooksForShelf(this.state.books)} shelfName={read.displayName} />
+						<BookShelf books={this.state.currentlyReading} shelfName="Currently Reading" onMoveBook={(book, shelf) => this.moveBookToShelf(book, shelf)} />
+						<BookShelf books={this.state.wantToRead} shelfName="Want to Read" onMoveBook={(book, shelf) => this.moveBookToShelf(book, shelf)}/>
+						<BookShelf books={this.state.read} shelfName="Read" onMoveBook={(book, shelf) => this.moveBookToShelf(book, shelf)}/>
 					</div>
 				</div>
 	            <div className="open-search">
