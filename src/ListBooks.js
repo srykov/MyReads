@@ -33,7 +33,6 @@ class ListBooks extends Component {
 		}
 		BooksAPI.update(book, destinationShelf)
 		.then(data => {
-			console.log('Update shelves: ', data)
 			BooksAPI.getAll().then(books =>{
 			this.setState(state => ({
 				currentlyReading: books.filter((book) => book.shelf === currentlyReadingKey),
