@@ -14,10 +14,10 @@ Specifically I practiced:
 * managing app location with React Router
 
 ## Getting Started
-You can can try the MyReads app out by doing the following:
+You can try the MyReads app out by doing the following:
 * Download the source code
-* Install all project dependencies with npm install
-* Start the development server with npm start
+* Install all project dependencies with `npm install`
+* Start the development server with `npm start`
 * Go to localhost:3000 in your browser
 
 ## Contributing
