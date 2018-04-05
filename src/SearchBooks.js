@@ -6,7 +6,7 @@ import Book from './Book'
 class SearchBooks extends Component {
 
 	state = {
-		matchingBooks: [],
+		filteredBooks: [],
 		query: ''
 	}
 
@@ -15,15 +15,16 @@ class SearchBooks extends Component {
 		if(this.state.query.length > 0){
 			BooksAPI.search(this.state.query)
 			.then((books) => {
-			  	this.setState({matchingBooks: books})
+				console.log('Search books: ', books)
+			  	this.setState({filteredBooks: books})
 			}).catch((error) => {
-				this.setState({matchingBooks: []})
+				this.setState({filteredBooks: []})
 			})
 		}
 	}
 
 	clearQuery = () => {
-		this.setState({query: '', matchingBooks: []})
+		this.setState({query: '', filteredBooks: []})
 	}
 
 	render(){
@@ -37,8 +38,8 @@ class SearchBooks extends Component {
 				</div>
 				<div className="search-books-results">
 				  <ol className="books-grid">
-					{this.state.matchingBooks.map((book) => (
-	                  <Book book={book} key={book.id}/>
+					{this.state.filteredBooks.map((book) => (
+	                  <Book book={book} shelf="none" key={book.id}/>
 					))}
 				  </ol>
 				</div>

@@ -17,7 +17,7 @@ class ListBooks extends Component {
 
 	componentDidMount() {
 		BooksAPI.getAll().then((books) => {
-
+			console.log('All Books: ', books)
 		  	this.setState({
 				currentlyReading: books.filter((book) => book.shelf === currentlyReadingKey),
 				wantToRead: books.filter((book) => book.shelf === wantToReadKey),
@@ -26,10 +26,14 @@ class ListBooks extends Component {
 		})
 	}
 
-	moveBookToShelf(book, shelf){
+	moveBookToShelf(book, destinationShelf){
 
-		BooksAPI.update(book, shelf)
+		if(destinationShelf === 'none'){
+			destinationShelf = ' ';
+		}
+		BooksAPI.update(book, destinationShelf)
 		.then(data => {
+			console.log('Update shelves: ', data)
 			BooksAPI.getAll().then(books =>{
 			this.setState(state => ({
 				currentlyReading: books.filter((book) => book.shelf === currentlyReadingKey),
