@@ -28,7 +28,7 @@ class SearchBooks extends Component {
 
 	getCurrentShelf = (book) => {
 		const libraryBooks = this.props.booksInLibrary;
-		let currentShelf = null;
+		let currentShelf = 'none';
 		if(libraryBooks.currentlyReading.find( (b) => b.id === book.id)) {
 			currentShelf = this.props.shelfKeys.currentlyReading
 		} else if (libraryBooks.currentlyReading.find( (b) => b.id === book.id)){

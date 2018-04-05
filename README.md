@@ -2,7 +2,7 @@
 
 This was a project that I developed as part of my Udacity [Front-End Web Developer Nanodegree Program](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001). The project required me to use React to create a bookshelf app that allows the user to select and categorize books they have read, are currently reading, or want to read.
 
-Udacity provided some the HTML & CSS code to display a static version of the My Reads app. I wrote the javascript and JSX to make the app functional.
+Udacity provided the HTML & CSS code to display a static version of the My Reads app. I wrote the javascript and JSX to required make the app functional and interactive.
 
 ## What I Learned
 This project gave me an opportunity to practice what I learned in the React Fundamentals course.
