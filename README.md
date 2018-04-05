@@ -14,10 +14,7 @@ Specifically I practiced:
 * managing app location with React Router
 
 ## Getting Started
-You can try The MyReads app out here:
-https://srykov.github.io/MyReads/
-
-Alternatively you can try the app out by doing the following:
+You can can try the MyReads app out by doing the following:
 * Download the source code
 * Install all project dependencies with npm install
 * Start the development server with npm start
