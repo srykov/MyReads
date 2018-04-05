@@ -31,9 +31,9 @@ class SearchBooks extends Component {
 		let currentShelf = 'none';
 		if(libraryBooks.currentlyReading.find( (b) => b.id === book.id)) {
 			currentShelf = this.props.shelfKeys.currentlyReading
-		} else if (libraryBooks.currentlyReading.find( (b) => b.id === book.id)){
+		} else if (libraryBooks.wantToRead.find( (b) => b.id === book.id)){
 			currentShelf = this.props.shelfKeys.wantToRead
-		} else if (libraryBooks.currentlyReading.find( (b) => b.id === book.id)){
+		} else if (libraryBooks.read.find( (b) => b.id === book.id)){
 			currentShelf = this.props.shelfKeys.read
 		}
 		return currentShelf
